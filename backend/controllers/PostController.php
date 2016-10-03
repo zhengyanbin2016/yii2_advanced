@@ -51,6 +51,19 @@ class PostController extends Controller
      */
     public function actionView($id)
     {
+//        $sql = 'select * from post where id = :id and status = :status';
+//        $post = \Yii::$app->db->createCommand($sql)
+//            ->bindValue(':id',$_GET['id'])
+//            ->bindValue(':status',2)
+//            ->queryOne();
+//        $post = Post::find()->where(['id'=>32])->one();
+//        $post = Post::find()->where(['status'=>1])->all();
+//        $post = Post::find()
+//            ->where(['AND',['status' => 2],['author_id' => 1],['LIKE','title','yii2']])
+//            ->orderBy('id')
+//            ->all();
+//        var_dump($post);
+//        exit(0);
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
