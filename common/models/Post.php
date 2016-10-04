@@ -22,6 +22,8 @@ use Yii;
  */
 class Post extends \yii\db\ActiveRecord
 {
+    private $_oldTags;
+
     /**
      * @inheritdoc
      */
@@ -85,4 +87,33 @@ class Post extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Poststatus::className(), ['id' => 'status']);
     }
+
+    /**
+     * 
+     */
+    public function afterFind()
+    {
+        parent::afterFind();
+        $this->_oldTags = $this->tags;
+    }
+
+    /**
+     * @param bool $insert
+     * @param array $changedAttributes
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert,$changedAttributes);
+        Tag::updateFrequency($this->_oldTags,$this->tags);
+    }
+
+    /**
+     *
+     */
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        Tag::updateFrequency($this->tags,'');
+    }
+    
 }
