@@ -22,16 +22,38 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+//            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+//            'id',
+        [
+            'attribute' => 'id',
+            'contentOptions' => ['width' => '30px','text-align' => 'center'],
+        ],
             'title',
-            'content:ntext',
+//            'author_id',
+            ['attribute'=>'authorName',
+                'label'=>'作者',
+                'value'=>'author.nickname',
+            ],
+//            'content:ntext',
             'tags:ntext',
-            'status',
+//            'status',
+        [
+        'attribute' => 'status',
+        'value' => 'status0.name',
+        'filter' => \common\models\Poststatus::find()
+                    ->select(['name','id'])
+                    ->orderBy('position')
+                    ->indexBy('id')
+                    ->column(),
+        ],
             // 'create_time:datetime',
-            // 'update_time:datetime',
-            // 'author_id',
+//             'update_time:datetime',
+        [
+            'attribute' => 'update_time',
+            'format' => ['date','php:Y-m-d H:i:s']
+        ],
+
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
